@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetherfi Innovate Kickoff</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a0033, #330066); /* Purple gradient */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        #code-display {
+            color: #ff00ff; /* Neon purple */
+            font-size: 28px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-shadow: 0 0 10px #ff00ff;
+            margin-bottom: 20px;
+        }
+        #compile-btn {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: #6600cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #6600cc;
+            transition: background 0.3s;
+        }
+        #compile-btn:hover {
+            background: #9900ff;
+        }
+        #compiling {
+            display: none;
+            color: #00ffff; /* Neon cyan */
+            font-size: 24px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        #message {
+            display: none;
+            font-size: 60px;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+            animation: boom 1s ease-in-out forwards;
+        }
+        @keyframes boom {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="code-display">Hackathon_Initiate();</div>
+    <button id="compile-btn">Compile & Run</button>
+    <div id="compiling">Compiling...</div>
+    <div id="message">Let the Hackathon Begin!</div>
+    <canvas id="confetti"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        const btn = document.getElementById('compile-btn');
+        const code = document.getElementById('code-display');
+        const compiling = document.getElementById('compiling');
+        const message = document.getElementById('message');
+
+        btn.addEventListener('click', () => {
+            // Step 1: Hide button and code, show "Compiling..."
+            btn.style.display = 'none';
+            code.style.display = 'none';
+            compiling.style.display = 'block';
+
+            // Step 2: After 1.5s "compile" delay, show message and confetti
+            setTimeout(() => {
+                compiling.style.display = 'none';
+                message.style.display = 'block';
+                
+                // Confetti burst
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff00ff', '#00ffff', '#6600cc'] // Neon purple, cyan, dark purple
+                });
+            }, 1500); // 1.5-second "compile" delay
+        });
+    </script>
+</body>
+</html>
