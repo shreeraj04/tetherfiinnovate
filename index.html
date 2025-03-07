@@ -45,11 +45,20 @@
             font-size: 24px;
             text-shadow: 0 0 10px #00ffff;
         }
-        #message {
+        #message-container {
             display: none;
+            text-align: center;
+        }
+        #message {
             font-size: 60px;
             color: #00ffff;
             text-shadow: 0 0 20px #00ffff;
+            margin-bottom: 20px;
+        }
+        #hackathon-image {
+            max-width: 300px; /* Adjust size as needed */
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00ffff;
             animation: boom 1s ease-in-out forwards;
         }
         @keyframes boom {
@@ -69,7 +78,11 @@
     <div id="code-display">Hackathon_Initiate();</div>
     <button id="compile-btn">Compile & Run</button>
     <div id="compiling">Compiling...</div>
-    <div id="message">Let the Hackathon Begin!</div>
+    <div id="message-container">
+        <div id="message">Let the Hackathon Begin!</div>
+        <img id="hackathon-image" src="hackathon-image.png" alt="Tetherfi Innovate Image">
+    </div>
+    <audio id="boom-sound" src="boom-effect.mp3" preload="auto"></audio>
     <canvas id="confetti"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -77,7 +90,8 @@
         const btn = document.getElementById('compile-btn');
         const code = document.getElementById('code-display');
         const compiling = document.getElementById('compiling');
-        const message = document.getElementById('message');
+        const messageContainer = document.getElementById('message-container');
+        const boomSound = document.getElementById('boom-sound');
 
         btn.addEventListener('click', () => {
             // Step 1: Hide button and code, show "Compiling..."
@@ -85,11 +99,11 @@
             code.style.display = 'none';
             compiling.style.display = 'block';
 
-            // Step 2: After 1.5s "compile" delay, show message and confetti
+            // Step 2: After 1.5s "compile" delay, show message, image, sound, and confetti
             setTimeout(() => {
                 compiling.style.display = 'none';
-                message.style.display = 'block';
-                
+                messageContainer.style.display = 'block';
+                boomSound.play().catch(error => console.log("Audio error:", error)); // Play local audio with error handling
                 // Confetti burst
                 confetti({
                     particleCount: 100,
