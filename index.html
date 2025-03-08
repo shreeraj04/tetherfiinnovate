@@ -39,27 +39,21 @@
         #compile-btn:hover {
             background: #9900ff;
         }
-        #countdown {
-            display: none;
-            color: #00ffff; /* Neon cyan */
-            font-size: 36px;
-            text-shadow: 0 0 10px #00ffff;
-        }
         #message-container {
             display: none;
             text-align: center;
-        }
-        #message {
-            font-size: 60px;
-            color: #00ffff;
-            text-shadow: 0 0 20px #00ffff;
-            margin-bottom: 20px;
         }
         #hackathon-image {
             max-width: 300px; /* Adjust size as needed */
             border-radius: 10px;
             box-shadow: 0 0 20px #00ffff;
+            margin-bottom: 20px;
             animation: boom 1s ease-in-out forwards;
+        }
+        #hackathon-video {
+            max-width: 600px; /* Adjust size as needed */
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00ffff;
         }
         @keyframes boom {
             0% { opacity: 0; transform: scale(0.5); }
@@ -75,51 +69,42 @@
     </style>
 </head>
 <body>
-    <div id="code-display">Hackathon_Initiate();</div>
+    <div id="code-display">Hackathon.start();</div>
     <button id="compile-btn">Compile & Run</button>
-    <div id="countdown">10</div>
     <div id="message-container">
-        <div id="message">Let the Hackathon Begin!</div>
         <img id="hackathon-image" src="Logo_Hackathon.png" alt="Tetherfi Innovate Image">
+        <video id="hackathon-video" src="hackathon.mp4" autoplay></video>
     </div>
-    <audio id="boom-sound" src="break-boom-fx-240235.mp3" preload="auto"></audio>
+    <audio id="boom-sound" src=break-boom-fix-240235.mp3" preload="auto"></audio>
     <canvas id="confetti"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         const btn = document.getElementById('compile-btn');
         const code = document.getElementById('code-display');
-        const countdown = document.getElementById('countdown');
         const messageContainer = document.getElementById('message-container');
         const boomSound = document.getElementById('boom-sound');
+        const video = document.getElementById('hackathon-video');
 
         btn.addEventListener('click', () => {
-            // Step 1: Hide button and code, show countdown
+            // Step 1: Hide button and code
             btn.style.display = 'none';
             code.style.display = 'none';
-            countdown.style.display = 'block';
 
-            // Step 2: Start countdown from 10 to 1
-            let timeLeft = 10;
-            countdown.textContent = timeLeft;
+            // Step 2: Show image and video, play boom sound immediately
+            messageContainer.style.display = 'block';
+            boomSound.play().catch(error => console.log("Audio error:", error));
 
-            const timer = setInterval(() => {
-                timeLeft--;
-                countdown.textContent = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    countdown.style.display = 'none';
-                    messageContainer.style.display = 'block';
-                    boomSound.play().catch(error => console.log("Audio error:", error)); // Play local audio
-                    // Confetti burst
-                    confetti({
-                        particleCount: 100,
-                        spread: 70,
-                        origin: { y: 0.6 },
-                        colors: ['#ff00ff', '#00ffff', '#6600cc'] // Neon purple, cyan, dark purple
-                    });
-                }
-            }, 1000); // Update every second
+            // Step 3: Video starts playing automatically (autoplay attribute)
+            // Step 4: Confetti triggers after 10 seconds
+            setTimeout(() => {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff00ff', '#00ffff', '#6600cc'] // Neon purple, cyan, dark purple
+                });
+            }, 16000); // 10 seconds after video starts
         });
     </script>
 </body>
