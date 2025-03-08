@@ -6,7 +6,7 @@
     <title>Tetherfi Innovate Kickoff</title>
     <style>
         body {
-            background: linear-gradient(135deg, #1a0033, #330066); /* Purple gradient */
+            background: linear-gradient(135deg, #1a0033, #330066);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -17,7 +17,7 @@
             overflow: hidden;
         }
         #code-display {
-            color: #ff00ff; /* Neon purple */
+            color: #ff00ff;
             font-size: 28px;
             background: rgba(0, 0, 0, 0.7);
             padding: 10px 20px;
@@ -44,14 +44,14 @@
             text-align: center;
         }
         #hackathon-image {
-            max-width: 300px; /* Adjust size as needed */
+            max-width: 300px;
             border-radius: 10px;
             box-shadow: 0 0 20px #00ffff;
             margin-bottom: 20px;
             animation: boom 1s ease-in-out forwards;
         }
         #hackathon-video {
-            max-width: 600px; /* Adjust size as needed */
+            max-width: 600px;
             border-radius: 10px;
             box-shadow: 0 0 20px #00ffff;
         }
@@ -73,9 +73,9 @@
     <button id="compile-btn">Compile & Run</button>
     <div id="message-container">
         <!--<img id="hackathon-image" src="Logo_Hackathon.png" alt="Tetherfi Innovate Image">-->
-        <video id="hackathon-video" src="hackathon.mp4" autoplay></video>
+        <video id="hackathon-video" src="hackathon.mp4"></video>
     </div>
-    <audio id="boom-sound" src=break-boom-fx-240235.mp3" preload="auto"></audio>
+    <audio id="boom-sound" src="break-boom-fx-240235.mp3" preload="auto"></audio>
     <canvas id="confetti"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -87,24 +87,33 @@
         const video = document.getElementById('hackathon-video');
 
         btn.addEventListener('click', () => {
-            // Step 1: Hide button and code
+            // Hide button and code
             btn.style.display = 'none';
             code.style.display = 'none';
-
-            // Step 2: Show image and video, play boom sound immediately
             messageContainer.style.display = 'block';
-            boomSound.play().catch(error => console.log("Audio error:", error));
 
-            // Step 3: Video starts playing automatically (autoplay attribute)
-            // Step 4: Confetti triggers after 10 seconds
+            // Reset video to start and play boom sound immediately
+            video.currentTime = 0; // Rewind to beginning
+            boomSound.currentTime = 0; // Rewind audio
+            boomSound.play()
+                .then(() => console.log("Boom sound played"))
+                .catch(error => console.error("Boom sound error:", error));
+
+            // Play video explicitly
+            video.play()
+                .then(() => console.log("Video started"))
+                .catch(error => console.error("Video error:", error));
+
+            // Confetti after 10 seconds
             setTimeout(() => {
+                console.log("Confetti triggered");
                 confetti({
                     particleCount: 100,
                     spread: 70,
                     origin: { y: 0.6 },
-                    colors: ['#ff00ff', '#00ffff', '#6600cc'] // Neon purple, cyan, dark purple
+                    colors: ['#ff00ff', '#00ffff', '#6600cc']
                 });
-            }, 17000); // 10 seconds after video starts
+            }, 10000);
         });
     </script>
 </body>
